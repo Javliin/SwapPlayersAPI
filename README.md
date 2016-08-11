@@ -15,5 +15,3 @@ Then swap!
 swapPlayers.swap(Player playerA, Player playerB);
 ```
 Don't worry, the API should handle everything else.
-## Where can I download?
-Go on over to the releases page, and theres the JAR!
