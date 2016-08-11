@@ -35,14 +35,6 @@ public class SwapNetworkManagerProxy extends NetworkManager {
                     e.printStackTrace();
                 }
 
-            if(packet instanceof PacketPlayInBlockDig) {
-                PacketPlayInBlockDig packetPlayInBlockDig = (PacketPlayInBlockDig) packet;
-                if(packetPlayInBlockDig.c() == PacketPlayInBlockDig.EnumPlayerDigType.DROP_ITEM || packetPlayInBlockDig.c() == PacketPlayInBlockDig.EnumPlayerDigType.DROP_ALL_ITEMS) {
-                    handle(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"You may not drop items when swapped!\",\"color\":\"red\"}")), this);
-                    return;
-                }
-            }
-
             SwapPlayers.getInstance().getSwapPartner(this).handle(packet, this);
             return;
         }
@@ -54,6 +46,14 @@ public class SwapNetworkManagerProxy extends NetworkManager {
     @Override
     public void a(ChannelHandlerContext channelhandlercontext, Packet packet) throws Exception {
         if(SwapPlayers.getInstance().hasSwapPartner(this)) {
+            if(packet instanceof PacketPlayInBlockDig) {
+                PacketPlayInBlockDig packetPlayInBlockDig = (PacketPlayInBlockDig) packet;
+                if(packetPlayInBlockDig.c() == PacketPlayInBlockDig.EnumPlayerDigType.DROP_ITEM || packetPlayInBlockDig.c() == PacketPlayInBlockDig.EnumPlayerDigType.DROP_ALL_ITEMS) {
+                    handle(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"You may not drop items when swapped!\",\"color\":\"red\"}")), this);
+                    return;
+                }
+            }
+            
             SwapPlayers.getInstance().getSwapPartner(this).a(channelhandlercontext, packet, this);
             return;
         }
