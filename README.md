@@ -1,4 +1,5 @@
 # SwapPlayersAPI
+Small API to swap players.
 ## What is it?
 API for Spigot / Bukkit that allows you to "swap" players on the server.
 This should make the server handle each player as their swap partner once swapped.
