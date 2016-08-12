@@ -8,8 +8,16 @@ import java.lang.reflect.Field;
 
 class SwapPlayersUtil {
     static void copyFields(Object from, Object to) throws NoSuchFieldException, IllegalAccessException {
-        for(Field field : from.getClass().getFields()) {
-            to.getClass().getDeclaredField(field.getName()).set(to, field.get(from));
+        Field migrate;
+        for(Field field : from.getClass().getDeclaredFields()) {
+            migrate = to.getClass().getDeclaredField(field.getName());
+            if(!field.isAccessible()) {
+                migrate.setAccessible(true);
+                migrate.set(to, field.get(from));
+                migrate.setAccessible(false);
+            }
+            
+            migrate.set(to, field.get(from));
         }
     }
 
